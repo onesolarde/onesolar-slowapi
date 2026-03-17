@@ -4,6 +4,7 @@ from typing import Any
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from app.database import engine, Base
+from app.routers import users, solar_parks
 
 # Create SQLAlchemy metadata
 Base.metadata.create_all(bind=engine)
@@ -24,6 +25,9 @@ app = FastAPI(
     version=app_config["VERSION"],
     description="Updated version of our Solar Park Project Management backend™",
 )
+
+app.include_router(users.router)
+app.include_router(solar_parks.router)
 
 @app.get("/healthcheck")
 def health_check():
