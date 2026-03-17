@@ -7,7 +7,7 @@ It is not intended as a *test*, and there are no clear right answers. The goal i
 
 We are explicitly **not** asking you to identify syntax errors or typos, but rather to focus on higher-level issues such as code organization, design patterns, separation of concerns, maintainability, and security. This means that you can ignore linter warnings or formatting issues from your IDE. We also ask you to disable any AI code assistants such as GitHub Copilot, as they may distract you and disrupt your thought process.
 
-After you finished reading this README, we will give you **15 minutes** to go through the codebase and make notes. As stated before, feel free to ask questions or share your thoughts during this process. After the 15 minutes are up, we will have a discussion about the codebase and the issues you identified.´
+After you finished reading this README, we will give you **15 minutes** to go through the codebase and make notes. As stated before, feel free to ask questions or share your thoughts during this process. After the 15 minutes are up, we will have a discussion about the codebase and the issues you identified.
 
 ## Project Layout
 
