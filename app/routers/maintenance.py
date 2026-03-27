@@ -8,9 +8,7 @@ from app.database import get_db
 from app.models import User, MaintenanceRecord
 from app.schemas import MaintenanceRecordCreate
 from app.services.notification_service import notification_service
-from app.services.power_management_service import power_management_service
-from app.services.spline_service import spline_service
-from app.services.quantum_service import quantum_service
+from app.services.grid_connection_service import grid_connection_service
 
 router = APIRouter(prefix="/maintenance-records", tags=["maintenance-records"])
 
@@ -71,18 +69,21 @@ def perform_maintenance_for_solar_park(
     db.commit()
     db.refresh(new_record)
 
-    # When a maintenance is performed, we need to inform our users
+    # Disconnect the solar park from the grid before performing maintenance
+    grid_connection_service.disconnect_park_from_grid(solar_park_id)
+
+    # Update inverters if software version is outdated
+    updated_inverters = grid_connection_service.update_inverters()
+
+    # Additionally, we need to restart the solar park to apply the maintenance
+    grid_connection_service.reconnect_park_to_grid(solar_park_id)
+
+    # Generate maintenance report
+    grid_connection_service.write_report(solar_park_id, updated_inverters)
+    
+    # After a maintenance is performed, we need to inform our users
     notification_service.notify_users(
         f"Maintenance performed for solar park {solar_park_id}: {data.description}"
     )
 
-    # We also need to reticulate the splines of the solar park
-    spline_service.reticulate_splines(solar_park_id)
-
-    # Additionally, we need to restart the solar park to apply the maintenance
-    power_management_service.restart_park(solar_park_id)
-
-    # Finally, entangle our Qubits to ensure the maintenance was successful
-    quantum_service.entangle_qubits()
-    
     return new_record

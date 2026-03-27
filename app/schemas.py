@@ -48,6 +48,21 @@ class SolarParkResponse(BaseModel):
     location: str
     energy_output: int
 
+# Inverters
+
+class InverterCreate(BaseModel):
+    solar_park_id: int
+    software_version: str
+
+class InverterUpdate(BaseModel):
+    solar_park_id: int
+    software_version: str
+
+class InverterResponse(BaseModel):
+    id: int
+    solar_park_id: int
+    software_version: str
+
 # Maintenance Records
 
 class MaintenanceRecordCreate(BaseModel):

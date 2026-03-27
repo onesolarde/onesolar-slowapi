@@ -21,6 +21,14 @@ class SolarPark(Base):
     energy_output = mapped_column(Integer, nullable=False)
 
 
+class Inverter(Base):
+    __tablename__ = "inverters"
+
+    id = mapped_column(Integer, primary_key=True, index=True)
+    solar_park_id = mapped_column(Integer, nullable=False)
+    software_version = mapped_column(String, nullable=False)
+
+
 class MaintenanceRecord(Base):
     __tablename__ = "maintenance_records"
 
